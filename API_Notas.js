@@ -1,3 +1,10 @@
+const express = require('express');
+const app = express();
+
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 let boletim = [];
 
 
@@ -18,3 +25,8 @@ app.post('/notas', (req, res) => {
 app.get('/notas', (req, res) => {
   res.json(boletim);
 });
+
+app.listen(3001, () => {
+console.log('Servidor rodando em http://localhost:3001');
+});
+

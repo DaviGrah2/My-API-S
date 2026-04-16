@@ -1,7 +1,18 @@
+const express = require('express');
+const app = express();
+
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 let contatos = [];
 
 
 app.post('/contatos', (req, res) => {
+  const { nome, telefone } = req.body;
+  if (!nome || !telefone) {
+    return res.status(400).json({ erro: "Nome e telefone são obrigatórios" });
+  }
   contatos.push(req.body);
   res.json(contatos);
 });
@@ -16,4 +27,14 @@ app.post('/buscar', (req, res) => {
   const { nome } = req.body;
   const resultado = contatos.find(c => c.nome === nome);
   res.json(resultado || { mensagem: "Não encontrado" });
+});
+
+app.delete('/contatos', (req, res) => {
+  const { nome } = req.body;
+  contatos = contatos.filter(c => c.nome !== nome);
+  res.json(contatos);
+});
+
+app.listen(3001, () => {
+console.log('Servidor rodando em http://localhost:3001');
 });

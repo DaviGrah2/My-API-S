@@ -1,5 +1,9 @@
+const express = require('express');
+const app = express();
 const md5 = require('md5');
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 let logins = [];
 
@@ -17,5 +21,18 @@ app.post('/login', (req, res) => {
 
 
 app.get('/login', (req, res) => {
+  const { email, senha } = req.body;
+  const senhaCriptografada = md5(senha);
+  const resultado = logins.find(l => l.email === email && l.senha === senhaCriptografada);
+  res.json(resultado || { mensagem: "Login inválido" });
+});
+
+app.delete('/login', (req, res) => {
+  const { email } = req.body;
+  logins = logins.filter(l => l.email !== email);
   res.json(logins);
+});
+
+app.listen(3001, () => {
+console.log('Servidor rodando em http://localhost:3001');
 });
