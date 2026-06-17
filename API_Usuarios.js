@@ -31,6 +31,12 @@ app.delete('/usuarios', (req, res) => {
   res.json(usuarios);
 });
 
+app.put('/usuarios', (req,res) => {
+  const { nome , email , senha } = req.body;
+  let Usuarios = usuarios.map (u => u.nome  === nome ? { nome , email , senha } : u);
+  res.json(Usuarios);
+})
+
 
 app.listen(3001, () => {
 console.log('Servidor rodando em http://localhost:3001');
