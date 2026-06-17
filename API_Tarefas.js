@@ -65,6 +65,16 @@ app.put('/tarefas', (req, res) => {
   res.json(tarefa);
 });
 
+app.delete('/tarefas', (req,res) => {
+  const { nome } = req.body;
+  let Tarefas = tarefas.filter(t => t.nome !== nome);
+  if(!nome || Tarefas.length === tarefas.length) {
+    return res.status(400).json({
+      erro: "Nome é necessario ou tarefa não encontrada"
+    })} 
+  res.json(Tarefas);  
+})
+
 
 app.listen(3001, () => {
   console.log('Servidor rodando em http://localhost:3001');
