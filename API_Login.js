@@ -33,6 +33,13 @@ app.delete('/login', (req, res) => {
   res.json(logins);
 });
 
+app.put('/login', (req,res) => {
+  const { nome , email , senha } = req.body;
+  const senhaCriptografada = md5(senha);
+  let Logins = logins.map (l => l.nome === nome ? { nome , email , senha: senhaCriptografada }: l);
+  res.json(Logins);
+})
+
 app.listen(3001, () => {
 console.log('Servidor rodando em http://localhost:3001');
 });
