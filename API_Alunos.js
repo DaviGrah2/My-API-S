@@ -65,6 +65,12 @@ app.get('/alunos', (req, res) => {
 res.json(alunos);
 });
 
+app.delete('/alunos', (req, res) => {
+     const { nome } = req.body;
+    alunos = alunos.filter(a => a.nome !== nome);
+    res.json(alunos);
+});
+
 app.listen(3001, () => {
 console.log('Servidor rodando em http://localhost:3001');
 });
